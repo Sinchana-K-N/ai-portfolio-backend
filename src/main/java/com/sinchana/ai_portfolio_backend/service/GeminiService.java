@@ -24,20 +24,25 @@ public class GeminiService {
         }
 
         String payload = """
+{
+  "contents": [
+    {
+      "parts": [
         {
-          "contents": [
-            {
-              "parts": [
-                { "text": "%s" }
-              ]
-            }
-          ],
-          "generationConfig": {
-            "temperature": 0.7,
-            "maxOutputTokens": 150
-          }
+          "text": "%s"
         }
-        """.formatted(prompt.replace("\"", "\\\""));
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 0.6,
+    "maxOutputTokens": 400,
+    "topP": 0.9,
+    "topK": 40,
+    "stopSequences": []
+  }
+}
+""".formatted(prompt.replace("\"", "\\\""));
 
         try {
             HttpRequest request = HttpRequest.newBuilder()
